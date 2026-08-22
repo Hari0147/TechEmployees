@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('fetchCode') {
             steps {
-                git branch: 'main', credentialsId: 'git_cred', url: 'https://github.com/Hari0147/TechEmployees.git'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [sparseCheckout([[path: 'frontend']])], userRemoteConfigs: [[credentialsId: 'git_cred', url: 'https://github.com/Hari0147/TechEmployees.git']])
             }
         }
         
