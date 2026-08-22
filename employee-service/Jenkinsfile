@@ -10,7 +10,7 @@ pipeline {
         
         stage('BuildDockerImage') {
             steps {
-                dir('frontend') {
+                dir('employee-service') {
                     sh '''
                         docker build -t hari00147/tech-employee/employee-service:latest .
                     '''
