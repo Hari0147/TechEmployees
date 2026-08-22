@@ -1,1 +1,21 @@
-
+pipeline {
+    agent any
+    
+    stages {
+        stage('fetchCode') {
+            steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [sparseCheckout([[path: 'employee-service']])], userRemoteConfigs: [[credentialsId: 'git_cred', url: 'https://github.com/Hari0147/TechEmployees.git']])
+            }
+        }
+        
+        stage('BuildDockerImage') {
+            steps {
+                dir('frontend') {
+                    sh '''
+                        docker build -t hari00147/tech-employee/employee-service:latest .
+                    '''
+                }
+            }
+        }
+    }
+}
