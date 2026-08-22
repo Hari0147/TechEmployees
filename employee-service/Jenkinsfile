@@ -12,8 +12,18 @@ pipeline {
             steps {
                 dir('employee-service') {
                     sh '''
-                        docker build -t hari00147/tech-employee/employee-service:latest .
+                        docker build -t hari00147/tech-employees:employee-service .
                     '''
+                }
+            }
+        }
+        stage('pushimage') {
+            steps {
+                withCredentials([string(credentialsId: 'Docker_pass', variable: 'Docker_pass')]) {
+                  sh '''
+                  echo "$Docker_pass" | docker login -u hari00147 --password-stdin
+                  docker push hari00147/tech-employees:employee-service
+                  '''
                 }
             }
         }
