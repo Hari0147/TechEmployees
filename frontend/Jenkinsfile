@@ -12,7 +12,18 @@ pipeline {
             steps {
                 dir('frontend') {
                     sh '''
+                        python3 -m venv venv
+                        ./venv/bin/python -m pip install --upgrade pip
                         ./venv/bin/python -m pip install -r requirements.txt
+                    '''
+                }
+            }
+        }
+        stage('BuildDockerImage') {
+            steps {
+                dir('frontend') {
+                    sh '''
+                        docker build -t hari00147/tech-employee/frontend-service:latest .
                     '''
                 }
             }
